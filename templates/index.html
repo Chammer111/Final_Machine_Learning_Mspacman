@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ms. Pac-Man AI Web App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f3f4f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .arcade-font {
+            font-family: 'Press Start 2P', cursive;
+        }
+        .video-container {
+            border: 4px solid #3b82f6; /* Classic Arcade Blue Border */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-5xl text-yellow-400 arcade-font mb-4" style="text-shadow: 4px 4px 0px #c21500;">
+            MS. PAC-MAN AI
+        </h1>
+        <p class="text-gray-400 text-lg">Machine Learning Final Project</p>
+        
+        <!-- Model Status Badge -->
+        <div class="mt-4 text-xs font-mono bg-gray-800 py-1 px-3 rounded border border-gray-600 inline-block">
+            Loaded Brain: <span class="text-green-400">{{ model_name }}</span>
+        </div>
+    </div>
+
+    <!-- The Game Stream -->
+    <div class="video-container bg-black">
+        <img src="{{ url_for('video_feed') }}" alt="Ms Pacman Gameplay Stream" width="400" height="500">
+    </div>
+
+    <!-- Status & Score -->
+    <div class="mt-8 grid grid-cols-2 gap-4 w-full max-w-md">
+        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700 text-center">
+            <h3 class="text-gray-500 text-xs uppercase tracking-widest mb-1">Status</h3>
+            <p class="text-green-500 font-bold text-lg animate-pulse">● LIVE</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700 text-center">
+            <h3 class="text-gray-500 text-xs uppercase tracking-widest mb-1">Score</h3>
+            <p id="score-display" class="text-yellow-400 font-bold text-2xl arcade-font">0</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-gray-600 text-sm">
+        Deep Q-Network (DQN) running on Flask & PyTorch
+    </footer>
+
+    <!-- JavaScript to auto-update the score -->
+    <script>
+        setInterval(() => {
+            fetch('/get_score')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('score-display').innerText = data.score;
+                })
+                .catch(err => console.log('Score update failed', err));
+        }, 1000); // Check score every 1 second
+    </script>
+
+</body>
+</html>
