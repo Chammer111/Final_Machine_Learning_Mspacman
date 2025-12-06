@@ -35,6 +35,8 @@ This project trains an autonomous AI agent to play *Ms. Pac-Man* using Deep Rein
 
 ## Results
 * **Training Duration:** 40,000 Episodes
-* **Best Score:** [Insert your best score here]
+* **Best Score:** 3399
 
 ![Learning Curve](graph_1_learning_curve.png)
+[Epsilon Scatter](graph_2_epsilon_scatter.png)
+[Matrix Heatmap](graph_3_matrix_heatmap.png)
